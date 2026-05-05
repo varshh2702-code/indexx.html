@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do You Love Me 💙💖</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #cceeff, #ffd6ec);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 25px;
+    text-align: center;
+    width: 320px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+/* GIF */
+img {
+    width: 150px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+}
+
+/* TEXT */
+h2 {
+    margin: 10px 0 20px;
+    color: #444;
+    min-height: 50px;
+}
+
+/* BUTTON AREA */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    height: 80px;
+}
+
+/* BUTTON STYLE */
+button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#yesBtn {
+    background: #ff80bf;
+    color: white;
+}
+
+#noBtn {
+    background: #66ccff;
+    color: white;
+}
+
+/* CONFETTI */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <!-- YOUR CAT GIF -->
+    <img id="gif" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRkY3dybGdoMjBqc2luZ21jZWxtNTZkZDB5YjVyN3Q1dHczNGZhNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/fevvq66mardOE/giphy.gif">
+
+    <h2 id="text">Just wanted to ask you... Do you love me?</h2>
+
+    <div class="buttons" id="btnArea">
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const text = document.getElementById("text");
+const gif = document.getElementById("gif");
+const btnArea = document.getElementById("btnArea");
+
+let count = 0;
+let firstClick = true;
+
+const phrases = [
+    "Are you sure? 🤨",
+    "Maybe your finger slipped? 😂",
+    "Wrong choice! Try again. 😤",
+    "I stayed cute for nothing? 🥺",
+    "System error: Try the other button 🤖",
+    "You missed! 😆",
+    "You're just flirting with 'No' now 😌",
+    "Choose love... choose me! ❤️",
+    "Nice try 😂",
+    "That’s illegal 😤",
+    "Try again 😏",
+    "I am not giving up 🦄😈",
+    "System error 🤖",
+    "You missed 😆",
+    "No button = decoration 😌",
+    "Bro really pressed NO 💀"
+];
+
+noBtn.addEventListener("click", () => {
+    firstClick = false;
+    count++;
+
+    // Move inside button area only
+    const maxX = btnArea.clientWidth - noBtn.offsetWidth;
+    const maxY = btnArea.clientHeight - noBtn.offsetHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.position = "absolute";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    // Funny text
+    text.innerText = phrases[count % phrases.length];
+
+    // Grow YES (safe limit)
+    let scale = Math.min(2, 1 + count * 0.1);
+    yesBtn.style.transform = `scale(${scale})`;
+});
+
+yesBtn.addEventListener("click", () => {
+    noBtn.style.display = "none";
+
+    if (firstClick) {
+        text.innerText = "I love you more, sweetheart ❤️";
+    } else {
+        text.innerText = "I Love You Too! ❤️";
+    }
+
+    // Switch to love GIF
+    gif.src = "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTNhZjRoMTkyY3R4YWF0MnlrZzB4YXM0MDI2amU5ZzU2czhsenZlZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/W1hd3uXRIbddu/giphy.gif";
+
+    startConfetti();
+});
+
+/* CONFETTI */
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let pieces = [];
+
+function startConfetti() {
+    for (let i = 0; i < 180; i++) {
+        pieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            size: Math.random() * 8 + 4,
+            speed: Math.random() * 4 + 2,
+            color: `hsl(${Math.random()*360},100%,65%)`
+        });
+    }
+    animate();
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    pieces.forEach(p => {
+        p.y += p.speed;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+    });
+
+    requestAnimationFrame(animate);
+}
+</script>
+
+</body>
+</html>
