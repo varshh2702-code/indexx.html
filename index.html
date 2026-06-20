@@ -3,311 +3,547 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Connection ✨</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>For My Favorite Person ❤️</title>
 
-<link rel="apple-touch-icon" href="https://img.icons8.com/fluent/180/hearts.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
-body {
-    min-height: 100vh;
+body{
+    min-height:100vh;
     width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #ffd6e7, #fff0f7, #ffe4ef);
-    overflow: hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ffd6e7,#fff0f7,#ffe4ef);
     position: relative;
-    padding: 20px;
 }
 
-/* Background floating hearts */
-.background-hearts {
-    position: fixed;
+/* FLOATING BACKGROUND HEARTS */
+.hearts{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:1;
+}
+
+.heart{
+    position:absolute;
+    font-size:20px;
+    animation:float 10s linear infinite;
+    opacity:.7;
+}
+
+@keyframes float{
+    0%{ transform:translateY(100vh); opacity:0; }
+    20%{ opacity:1; }
+    100%{ transform:translateY(-100px); opacity:0; }
+}
+
+/* CONTAINER FRAME */
+.card{
+    width:min(90vw,460px);
+    height:85vh;
+    max-height:700px;
+    background:rgba(255,255,255,.25);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:30px;
+    padding:25px;
+    box-shadow:0 8px 32px rgba(255,105,180,.15);
+    text-align:center;
+    position: relative;
+    overflow: hidden;
+    z-index:10;
+    display: flex;
+    flex-direction: column;
+}
+
+.scroll-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.scroll-wrapper::-webkit-scrollbar{ width:4px; }
+.scroll-wrapper::-webkit-scrollbar-track{ background:transparent; }
+.scroll-wrapper::-webkit-scrollbar-thumb{ background:rgba(255, 77, 136, 0.2); border-radius:10px; }
+
+/* ISOLATED VIEW SYSTEM */
+.page-view {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.ambient-heart {
-    position: absolute;
-    font-size: 20px;
-    animation: floatUp 8s linear infinite;
-    opacity: 0.6;
-}
-
-@keyframes floatUp {
-    0% { transform: translateY(100vh) scale(1); opacity: 0; }
-    20% { opacity: 0.7; }
-    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-}
-
-/* Centralized Interactive Card Frame */
-.connection-card {
-    width: min(100%, 400px);
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 24px;
-    padding: 35px 25px;
-    text-align: center;
-    box-shadow: 0 10px 40px rgba(255, 105, 180, 0.1);
-    z-index: 10;
-    display: flex;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.01);
+    display: none; 
     flex-direction: column;
     align-items: center;
-    gap: 20px;
 }
 
-.status-badge {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 6px 16px;
+.page-view.active-view {
+    display: flex !important;
+}
+
+.topgif{
+    width:100px;
+    height:100px;
+    object-fit:cover;
+    border-radius:18px;
+    margin-bottom:12px;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+h1{ color:#ff4d88; font-size:1.4rem; margin-bottom:6px; width:100%; }
+.subtitle{ font-size:12px; color:#555; margin-bottom:15px; width:100%; }
+.content{ line-height:1.7; font-size:14px; color:#444; text-align:center; width:100%; }
+
+/* VIRTUAL HUG DASHBOARD MODULE */
+.hug-panel {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px dashed #ff77a9;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.7);
-    color: #777;
-    transition: all 0.3s ease;
-}
-
-.icon-display {
-    font-size: 55px;
-    margin: 10px 0;
-    animation: pulseGlow 2s ease-in-out infinite;
-}
-
-@keyframes pulseGlow {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-    100% { transform: scale(1); }
-}
-
-h2 {
-    color: #ff4d88;
-    font-size: 1.4rem;
-    font-weight: 600;
-}
-
-p {
-    font-size: 13px;
-    color: #555;
-    line-height: 1.5;
-    max-width: 280px;
-}
-
-/* The Main Interactive Action Button */
-.action-btn {
+    padding: 12px;
+    margin-bottom: 15px;
     width: 100%;
-    max-width: 260px;
-    padding: 14px 30px;
-    border: none;
-    border-radius: 50px;
-    background: linear-gradient(135deg, #ff77a9, #ff4d88);
-    color: white;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(255, 77, 136, 0.3);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.action-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 77, 136, 0.4);
-}
-
-.action-btn:disabled {
-    background: #e2b3c4;
-    box-shadow: none;
-    cursor: not-allowed;
-}
-
-/* Dynamic Live Notification Banner */
-.hug-notification-overlay {
-    position: absolute;
-    top: -100px;
-    width: 85%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 77, 136, 0.2);
-    border-radius: 20px;
-    padding: 18px 15px;
-    box-shadow: 0 15px 35px rgba(255, 77, 136, 0.2);
-    z-index: 100;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    gap: 6px;
 }
 
-.hug-notification-overlay.slide-down {
-    transform: translateY(125px);
-}
-
-.notification-title {
-    font-size: 14px;
-    font-weight: 700;
+.hug-title {
+    font-size: 13px;
+    font-weight: 600;
     color: #ff4d88;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.notification-desc {
+.hug-btn {
+    background: #ff4d88;
+    color: white;
+    border: none;
+    padding: 8px 20px;
     font-size: 12px;
-    color: #444;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(255, 77, 136, 0.2);
 }
 
-/* Bursting Screen Hearts */
-.burst-heart {
-    position: fixed;
-    pointer-events: none;
-    color: #ff4d88;
-    z-index: 50;
-    animation: burstOut 2s ease-out forwards;
+.hug-btn:hover { background: #e03970; transform: scale(1.02); }
+.hug-status { font-size: 11px; color: #777; font-style: italic; min-height: 16px; }
+
+/* NAVIGATION GRID */
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top: 5px;
+    width:100%;
+}
+.folder:nth-child(3) { grid-column: span 2; }
+
+.folder{
+    background:rgba(255,255,255,.5);
+    border-radius:18px;
+    padding:15px;
+    cursor:pointer;
+    transition:.3s;
+    border: 1px solid rgba(255,255,255,0.3);
 }
 
-@keyframes burstOut {
-    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-    100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(var(--scale)); opacity: 0; }
+.folder:hover{
+    transform:translateY(-3px);
+    background:white;
+    box-shadow: 0 4px 12px rgba(255,105,180,0.1);
 }
+
+.icon{ font-size:24px; margin-bottom:4px; }
+.label{ font-size:11px; font-weight:600; line-height:1.2; color:#ff4d88; }
+
+/* SECRET REVEAL ZONE */
+.secret-trigger-zone {
+    margin-top: 15px;
+    width:100%;
+    display:none; 
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.secret-btn {
+    width:100%;
+    padding:12px;
+    border: 2px dashed #ff4d88;
+    border-radius: 20px;
+    background:rgba(255,255,255,0.7);
+    color:#ff4d88;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+
+.secret-btn:hover { background:#ff4d88; color:white; box-shadow:0 5px 15px rgba(255, 77, 136, 0.2); }
+
+/* FOOTER NAV */
+.button-footer { margin-top:auto; padding-top:12px; width:100%; flex-shrink:0; }
+.back{
+    padding:9px 25px;
+    border:none;
+    border-radius:30px;
+    background:#ff77a9;
+    color:white;
+    font-size:13px;
+    font-weight:500;
+    cursor:pointer;
+    transition:background 0.2s;
+    box-shadow:0 4px 10px rgba(255,119,169,0.3);
+}
+.back:hover{ background:#ff4d88; }
+
+img.media-item{ width:100%; max-width:180px; height:150px; object-fit:cover; border-radius:18px; margin:10px auto; display:block; box-shadow:0 4px 12px rgba(0,0,0,.06); }
+iframe{ width:100%; height:150px; border:none; border-radius:18px; margin-top:10px; box-shadow:0 4px 12px rgba(0,0,0,.06); }
+h3{ margin-top:12px; font-size:14px; color:#ff4d88; }
+
+/* INCOMING HUG NOTIFICATION POPUP */
+.live-hug-alert {
+    position: absolute;
+    top: 15px;
+    left: 5%;
+    width: 90%;
+    background: white;
+    border: 2px solid #ff4d88;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 10px 25px rgba(255, 77, 136, 0.3);
+    z-index: 50000;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    animation: slideDownIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes slideDownIn {
+    from { transform: translateY(-100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.live-hug-alert h4 { color: #ff4d88; font-size: 14px; margin-bottom: 4px; }
+.live-hug-alert p { font-size: 12px; color: #444; margin-bottom: 10px; }
+
+/* BIRTHDAY OVERLAY */
+.birthday-overlay {
+    position:fixed; top:0; left:0; width:100vw; height:100vh;
+    background:linear-gradient(135deg, rgba(255, 214, 231, 0.98), rgba(255, 240, 247, 0.99), rgba(255, 228, 239, 0.98));
+    z-index:999999; display:none; justify-content:center; align-items:center; flex-direction:column; opacity:0; transition:opacity 0.4s ease; padding:20px;
+}
+.birthday-overlay.show-overlay { display:flex; opacity:1; }
+.birthday-text {
+    font-family:'Great Vibes', cursive, sans-serif; font-size:clamp(2.5rem, 8vw, 4.5rem); color:#cc295d; text-align:center; line-height:1.4; text-shadow:2px 2px 10px rgba(255, 105, 180, 0.15);
+    animation:scaleInCelebration 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; margin-bottom:30px;
+}
+@keyframes scaleInCelebration { from { transform:scale(0.8); opacity:0; } to { transform:scale(1); opacity:1; } }
+
+.sprinkle-heart { position:absolute; color:#ff4d88; font-size:24px; pointer-events:none; animation:sprinkleFall 5s linear infinite; z-index:1000000; }
+@keyframes sprinkleFall { 0% { transform:translateY(-5vh) rotate(0deg); opacity:0; } 10% { opacity:1; } 90% { opacity:1; } 100% { transform:translateY(105vh) rotate(360deg); opacity:0; } }
+
+.close-birthday-btn { padding:10px 25px; background:white; border:1px solid #ff77a9; border-radius:20px; color:#ff77a9; font-weight:500; cursor:pointer; font-size:13px; transition:all 0.2s; box-shadow:0 4px 10px rgba(0,0,0,0.05); }
+.close-birthday-btn:hover { background:#ff77a9; color:white; }
 </style>
 </head>
 <body>
 
-<div class="background-hearts" id="ambientContainer"></div>
+<div class="hearts"></div>
 
-<div class="hug-notification-overlay" id="hugBanner">
-    <div class="notification-title">💓 Connection Squeezed! 💓</div>
-    <div class="notification-desc">He is holding you tightly across the distance right now!</div>
-    <button class="action-btn" style="padding: 6px 20px; font-size: 11px; width: auto;" onclick="dismissAndReturnHug()">Squeeze Back</button>
+<div class="birthday-overlay" id="birthdayOverlay">
+    <div class="birthday-text">Happy Birthday, Mi Amor</div>
+    <button class="close-birthday-btn" onclick="closeBirthday()">Close</button>
 </div>
 
-<div class="connection-card">
-    <div class="status-badge" id="signalStatus">Connecting to Stream...</div>
-    <div class="icon-display" id="mainIcon">🌐</div>
-    <h2>Live Thinking-Of-You Ping</h2>
-    <p>Keep this tab open together. Tap below to send an instant warm virtual squeeze across the distance.</p>
-    <button class="action-btn" id="pingBtn" onclick="transmitLiveHug()">Send a Virtual Hug 💖</button>
+<div class="card">
+
+    <div class="live-hug-alert" id="incomingHugAlert">
+        <h4>💓 Hug Received! 💓</h4>
+        <p>Your favorite person is squeezing you tight right now!</p>
+        <button class="hug-btn" style="font-size:11px; padding:6px 15px;" onclick="returnHug()">Squeeze Back</button>
+    </div>
+
+    <div class="page-view active-view" id="home">
+        <div class="scroll-wrapper">
+            <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNjeWZxZ2Q0NDRxNjdsZ2RldWxoZGNlYTBlbDVqaG1nOThhbjc3MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8Fu2I6xqRikRY7PRan/giphy.gif" class="topgif" alt="Welcome Frame">
+
+            <h1>❤️ For My Favorite Person ❤️</h1>
+            <p class="subtitle">A tiny corner of the internet made just for you.</p>
+
+            <div class="hug-panel">
+                <div class="hug-title"><span>🌐</span> Long Distance Connection</div>
+                <button class="hug-btn" id="sendHugBtn" onclick="sendLivePing()">Send a Virtual Hug 💖</button>
+                <div class="hug-status" id="connectionStatus">Connecting to signal...</div>
+            </div>
+
+            <div class="grid">
+                <div class="folder" onclick="openPage('love')">
+                    <div class="icon">💖</div>
+                    <div class="label">Why I Love You</div>
+                </div>
+
+                <div class="folder" onclick="openPage('letter')">
+                    <div class="icon">💌</div>
+                    <div class="label">My Letter</div>
+                </div>
+
+                <div class="folder" onclick="openPage('reminds')">
+                    <div class="icon">🌸</div>
+                    <div class="label">One Thing That Reminds Me Of You</div>
+                </div>
+            </div>
+            
+            <div class="secret-trigger-zone" id="secretZone">
+                <button class="secret-btn" onclick="triggerBirthdaySurprise()">Don't open</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-view" id="love">
+        <div class="scroll-wrapper">
+            <h1>Why I Love You 💗</h1>
+            <div class="content" style="text-align: left; padding: 10px 5px;">
+                • You are a dumb smart guy 😂<br><br>
+                • The way you say "chello"😭<br><br>
+                • What you mean how can i not love a man who reads?!?🗣️ <br><br>
+                • The way you make me blush 🤭<br><br>
+                • The true reason is I am reasonless; all of the reasons above just keep me in love. I don't know why I loved you without knowing you would give any of this to me 🤍
+            </div>
+        </div>
+        <div class="button-footer">
+            <button class="back" onclick="goHome()">Back</button>
+        </div>
+    </div>
+
+    <div class="page-view" id="letter">
+        <div class="scroll-wrapper">
+            <h1>💌 My Letter</h1>
+            <div class="content" style="padding: 10px 5px;">
+                Mi Amour,
+                <br><br>
+                Teach me how to love you,<br>
+                Because I want to love you<br>
+                the way you wanted to be loved,<br><br>
+                Tell me the things you love<br>
+                So that I can know about them<br>
+                and talk about them with you for hours,<br><br>
+                I have never been this in love with anybody,<br>
+                I don't know why I am in love with you this much,
+                <br><br>
+                🤍<br>
+                <i>
+                "Tu sei me più di me stessa.<br>
+                Di qualunque cosa siano fatte le nostre anime,<br>
+                la tua e la mia sono uguali."
+                </i><br>
+                🤍
+            </div>
+        </div>
+        <div class="button-footer">
+            <button class="back" onclick="goHome()">Back</button>
+        </div>
+    </div>
+
+    <div class="page-view" id="reminds">
+        <div class="scroll-wrapper">
+            <h1>🌸 Reminds Me Of You</h1>
+            <div class="content">
+                <h3>🌷 Flower</h3>
+                Pink Lilies 🤍
+                <img src="https://i.pinimg.com/736x/e6/13/68/e61368544a005397cfd8f5bec783f7b1.jpg" class="media-item" alt="Flower">
+
+                <h3>🍫 Food</h3>
+                Chocolate Cake 🤍
+                <img src="https://i.pinimg.com/736x/3b/17/47/3b1747caec02855cab8f8988bd52dd64.jpg" class="media-item" alt="Food">
+
+                <h3>🎵 Song</h3>
+                This song reminds me of you 🤍
+                
+                <iframe
+                src="https://www.youtube.com/embed/tK6Cq1B-J1Q?start=108"
+                title="Song Player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+        <div class="button-footer">
+            <button class="back" onclick="goHome()">Back</button>
+        </div>
+    </div>
+
 </div>
 
 <script>
-const ambientContainer = document.getElementById('ambientContainer');
-for (let i = 0; i < 15; i++) {
+const heartsContainer = document.querySelector('.hearts');
+for(let i=0; i<20; i++){
     const heart = document.createElement('div');
-    heart.classList.add('ambient-heart');
+    heart.classList.add('heart');
     heart.innerHTML = '💗';
-    heart.style.left = Math.random() * 100 + '%';
-    heart.style.fontSize = (14 + Math.random() * 14) + 'px';
-    heart.style.animationDuration = (6 + Math.random() * 6) + 's';
-    heart.style.animationDelay = Math.random() * 5 + 's';
-    ambientContainer.appendChild(heart);
+    heart.style.left = Math.random()*100+'%';
+    heart.style.fontSize = (14+Math.random()*16)+'px';
+    heart.style.animationDuration = (7+Math.random()*7)+'s';
+    heart.style.animationDelay = Math.random()*4+'s';
+    heartsContainer.appendChild(heart);
 }
 
-const NETWORK_ROOM_ID = "mi_amor_dedicated_ping_channel_2026";
-const signalStatus = document.getElementById('signalStatus');
-const hugBanner = document.getElementById('hugBanner');
-const mainIcon = document.getElementById('mainIcon');
-const pingBtn = document.getElementById('pingBtn');
+const openedPagesLog = { love: false, letter: false, reminds: false };
 
-const phoneFingerprintId = "device_" + Math.floor(Math.random() * 1000000);
-const networkStream = new EventSource(`https://pie.ht/stream/${NETWORK_ROOM_ID}`);
+function openPage(id){
+    if (openedPagesLog.hasOwnProperty(id)) { openedPagesLog[id] = true; }
+    document.querySelectorAll('.page-view').forEach(view => { view.classList.remove('active-view'); });
+    
+    const target = document.getElementById(id);
+    if(target) {
+        target.classList.add('active-view');
+        const scrollBlock = target.querySelector('.scroll-wrapper');
+        if(scrollBlock) scrollBlock.scrollTop = 0;
+    }
+}
 
-networkStream.onopen = () => {
-    signalStatus.innerHTML = "Connected Live • Signal Clear";
-    signalStatus.style.color = "#2ecc71";
-    mainIcon.innerHTML = "✨💖✨";
+function goHome(){
+    document.querySelectorAll('.page-view').forEach(view => { view.classList.remove('active-view'); });
+    document.getElementById('home').classList.add('active-view');
+
+    if (openedPagesLog.love && openedPagesLog.letter && openedPagesLog.reminds) {
+        document.getElementById('secretZone').style.display = 'block';
+        setTimeout(() => {
+            const mainScroll = document.querySelector('#home .scroll-wrapper');
+            if(mainScroll) { mainScroll.scrollTo({ top: mainScroll.scrollHeight, behavior: 'smooth' }); }
+        }, 100);
+    }
+}
+
+/* LIVE REAL-TIME SIGNAL PIPELINE */
+const CHANNEL_ROOM = "mi_amor_ldr_integrated_sync_2026";
+const statusEl = document.getElementById('connectionStatus');
+const alertBox = document.getElementById('incomingHugAlert');
+const myUniqueAppId = "device_" + Math.floor(Math.random() * 1000000);
+
+const eventSource = new EventSource(`https://pie.ht/stream/${CHANNEL_ROOM}`);
+
+eventSource.onopen = () => {
+    statusEl.innerHTML = "Connected live with your boy 💚";
+    statusEl.style.color = "#2ecc71";
 };
 
-networkStream.onerror = () => {
-    signalStatus.innerHTML = "Standby • Connecting...";
-    signalStatus.style.color = "#888";
-    mainIcon.innerHTML = "🌐";
+eventSource.onerror = () => {
+    statusEl.innerHTML = "Signal standby... waiting.";
+    statusEl.style.color = "#777";
 };
 
-networkStream.onmessage = (messageEvent) => {
+eventSource.onmessage = (event) => {
     try {
-        const receivedData = JSON.parse(messageEvent.data);
-        if (receivedData && receivedData.senderId !== phoneFingerprintId && receivedData.type === "LIVE_HUG") {
-            displayIncomingHugEffects();
+        const payload = JSON.parse(event.data);
+        if (payload && payload.senderId !== myUniqueAppId) {
+            triggerIncomingHugDisplay();
         }
-    } catch (parseError) {}
+    } catch(e) {}
 };
 
-function transmitLiveHug() {
-    pingBtn.disabled = true;
-    pingBtn.innerHTML = "Sending Squeeze...";
+function sendLivePing() {
+    const btn = document.getElementById('sendHugBtn');
+    btn.innerHTML = "Sending Hug... ✨";
+    btn.disabled = true;
 
-    fetch(`https://pie.ht/stream/${NETWORK_ROOM_ID}`, {
+    fetch(`https://pie.ht/stream/${CHANNEL_ROOM}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ senderId: phoneFingerprintId, type: "LIVE_HUG" })
+        body: JSON.stringify({ senderId: myUniqueAppId, action: "HUG" })
     })
     .then(() => {
-        pingBtn.innerHTML = "Sent Successfully! 🥰";
-        createVisualHeartBurst(window.innerWidth / 2, window.innerHeight / 2);
+        btn.innerHTML = "Hug Sent! 🥰";
+        statusEl.innerHTML = "Sent to him successfully!";
         setTimeout(() => {
-            pingBtn.innerHTML = "Send a Virtual Hug 💖";
-            pingBtn.disabled = false;
+            btn.innerHTML = "Send a Virtual Hug 💖";
+            btn.disabled = false;
+            statusEl.innerHTML = "Connected live with your boy 💚";
         }, 3000);
     })
     .catch(() => {
-        pingBtn.innerHTML = "Send a Virtual Hug 💖";
-        pingBtn.disabled = false;
+        btn.innerHTML = "Send a Virtual Hug 💖";
+        btn.disabled = false;
     });
 }
 
-function displayIncomingHugEffects() {
-    hugBanner.classList.add('slide-down');
-    let cycles = 0;
-    const interval = setInterval(() => {
-        const xCoord = Math.random() * window.innerWidth;
-        const yCoord = Math.random() * window.innerHeight;
-        createVisualHeartBurst(xCoord, yCoord);
-        cycles++;
-        if (cycles > 4) clearInterval(interval);
-    }, 250);
-}
-
-function dismissAndReturnHug() {
-    hugBanner.classList.remove('slide-down');
-    transmitLiveHug();
-}
-
-function createVisualHeartBurst(originX, originY) {
-    for (let i = 0; i < 12; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('burst-heart');
-        particle.innerHTML = Math.random() > 0.5 ? '❤️' : '💗';
-        
-        const targetAngle = Math.random() * Math.PI * 2;
-        const distanceOffset = 60 + Math.random() * 120;
-        
-        const deltaX = Math.cos(targetAngle) * distanceOffset;
-        const deltaY = Math.sin(targetAngle) * distanceOffset;
-        
-        particle.style.left = originX + 'px';
-        particle.style.top = originY + 'px';
-        particle.style.setProperty('--tx', `${deltaX}px`);
-        particle.style.setProperty('--ty', `${deltaY}px`);
-        particle.style.setProperty('--scale', 0.6 + Math.random() * 1);
-        particle.style.fontSize = (16 + Math.random() * 16) + 'px';
-        
-        document.body.appendChild(particle);
-        setTimeout(() => { particle.remove(); }, 2000);
+function triggerIncomingHugDisplay() {
+    alertBox.style.display = 'flex';
+    for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+            const h = document.createElement('div');
+            h.classList.add('heart');
+            h.innerHTML = '❤️';
+            h.style.left = (20 + Math.random() * 60) + '%';
+            h.style.top = '40%';
+            h.style.animationDuration = '3s';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 3000);
+        }, i * 200);
     }
+}
+
+function returnHug() {
+    alertBox.style.display = 'none';
+    sendLivePing();
+}
+
+/* CELEBRATION DISPLAYS */
+let sprinkleTimer = null;
+
+function triggerBirthdaySurprise() {
+    const overlay = document.getElementById('birthdayOverlay');
+    overlay.classList.add('show-overlay');
+    
+    sprinkleTimer = setInterval(() => {
+        const item = document.createElement('div');
+        item.classList.add('sprinkle-heart');
+        item.innerHTML = Math.random() > 0.5 ? '💗' : '❤️';
+        item.style.left = Math.random() * 100 + 'vw';
+        item.style.fontSize = (16 + Math.random() * 24) + 'px';
+        item.style.animationDuration = (2.5 + Math.random() * 3) + 's';
+        overlay.appendChild(item);
+        setTimeout(() => { item.remove(); }, 5000);
+    }, 120);
+}
+
+function closeBirthday() {
+    const overlay = document.getElementById('birthdayOverlay');
+    overlay.classList.remove('show-overlay');
+    if(sprinkleTimer) { clearInterval(sprinkleTimer); }
+    document.querySelectorAll('.sprinkle-heart').forEach(el => el.remove());
 }
 </script>
 
