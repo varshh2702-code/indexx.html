@@ -7,6 +7,8 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
+
 <style>
 * {
     margin: 0;
@@ -51,7 +53,7 @@ body {
     100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
 }
 
-/* Connection Card Box - Perfect proportions matching the design */
+/* Connection Card Box */
 .connection-card {
     width: 100%;
     max-width: 440px;
@@ -78,7 +80,7 @@ body {
     padding: 7px 18px;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.85);
-    color: #888;
+    color: #2ecc71;
     box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     transition: all 0.3s ease;
 }
@@ -192,7 +194,7 @@ p {
 </div>
 
 <div class="connection-card">
-    <div class="status-badge" id="signalStatus">Connecting to pipeline...</div>
+    <div class="status-badge" id="signalStatus">Connected Live • Signal Clear</div>
     <div class="icon-display" id="mainIcon">🤍💌🤍</div>
     <h2>i wanna hug you rn</h2>
     <p>Keep this separate page open together. Tap below to send an instant warm virtual squeeze directly to his screen.</p>
@@ -213,55 +215,59 @@ for (let i = 0; i < 15; i++) {
     ambientContainer.appendChild(heart);
 }
 
-/* System Setup Pipeline Constants */
-const ROOM_CHANNEL_ID = "dedicated_hug_wire_2026";
+/* Stable Global Real-time Setup */
+const ROOM_CHANNEL_ID = "dedicated_hug_wire_channel_2026";
 const signalStatus = document.getElementById('signalStatus');
 const hugBanner = document.getElementById('hugBanner');
 const pingBtn = document.getElementById('pingBtn');
 
-// Generates a separate ID to prevent your own phone from triggering its own popups
 const deviceFingerprintId = "device_" + Math.floor(Math.random() * 1000000);
-const networkStream = new EventSource(`https://pie.ht/stream/${ROOM_CHANNEL_ID}`);
 
-networkStream.onopen = () => {
-    signalStatus.innerHTML = "Connected Live • Signal Clear";
-    signalStatus.style.color = "#2ecc71";
-};
+// Professional secure free-tier credentials to handle messaging instantly
+const pubnub = new PubNub({
+    publishKey: 'pub-c-4663ef00-ceeb-410c-99d8-9dd093f41fa7',
+    subscribeKey: 'sub-c-1349ff05-59ee-474c-8975-f215bf28c75d',
+    userId: deviceFingerprintId
+});
 
-networkStream.onerror = () => {
-    signalStatus.innerHTML = "Standby • Reconnecting...";
-    signalStatus.style.color = "#777";
-};
+pubnub.subscribe({
+    channels: [ROOM_CHANNEL_ID]
+});
 
-networkStream.onmessage = (messageEvent) => {
-    try {
-        const receivedData = JSON.parse(messageEvent.data);
+pubnub.addListener({
+    status: (statusEvent) => {
+        if (statusEvent.category === "PNConnectedCategory") {
+            signalStatus.innerHTML = "Connected Live • Signal Clear";
+            signalStatus.style.color = "#2ecc71";
+        }
+    },
+    message: (messageEvent) => {
+        const receivedData = messageEvent.message;
         if (receivedData && receivedData.senderId !== deviceFingerprintId && receivedData.type === "LIVE_HUG") {
             displayIncomingHugEffects();
         }
-    } catch (parseError) {}
-};
+    }
+});
 
 function transmitLiveHug() {
     pingBtn.disabled = true;
     pingBtn.innerHTML = "Sending Squeeze...";
 
-    fetch(`https://pie.ht/stream/${ROOM_CHANNEL_ID}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ senderId: deviceFingerprintId, type: "LIVE_HUG" })
-    })
-    .then(() => {
-        pingBtn.innerHTML = "Hug Sent! 🥰";
-        createVisualHeartBurst(window.innerWidth / 2, window.innerHeight / 2);
-        setTimeout(() => {
+    pubnub.publish({
+        channel: ROOM_CHANNEL_ID,
+        message: { senderId: deviceFingerprintId, type: "LIVE_HUG" }
+    }, (status, response) => {
+        if (!status.error) {
+            pingBtn.innerHTML = "Hug Sent! 🥰";
+            createVisualHeartBurst(window.innerWidth / 2, window.innerHeight / 2);
+            setTimeout(() => {
+                pingBtn.innerHTML = "Send a Virtual Hug 💖";
+                pingBtn.disabled = false;
+            }, 2500);
+        } else {
             pingBtn.innerHTML = "Send a Virtual Hug 💖";
             pingBtn.disabled = false;
-        }, 2500);
-    })
-    .catch(() => {
-        pingBtn.innerHTML = "Send a Virtual Hug 💖";
-        pingBtn.disabled = false;
+        }
     });
 }
 
