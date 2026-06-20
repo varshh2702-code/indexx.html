@@ -1,1 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Connection ✨</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="apple-touch-icon" href="https://img.icons8.com/fluent/180/hearts.png">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffd6e7, #fff0f7, #ffe4ef);
+    overflow: hidden;
+    position: relative;
+    padding: 20px;
+}
+
+/* Background floating hearts */
+.background-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ambient-heart {
+    position: absolute;
+    font-size: 20px;
+    animation: floatUp 8s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(100vh) scale(1); opacity: 0; }
+    20% { opacity: 0.7; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+}
+
+/* Centralized Interactive Card Frame */
+.connection-card {
+    width: min(100%, 400px);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 24px;
+    padding: 35px 25px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(255, 105, 180, 0.1);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.status-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    color: #777;
+    transition: all 0.3s ease;
+}
+
+.icon-display {
+    font-size: 55px;
+    margin: 10px 0;
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+h2 {
+    color: #ff4d88;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+p {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+    max-width: 280px;
+}
+
+/* The Main Interactive Action Button */
+.action-btn {
+    width: 100%;
+    max-width: 260px;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #ff77a9, #ff4d88);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255, 77, 136, 0.3);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.action-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 77, 136, 0.4);
+}
+
+.action-btn:disabled {
+    background: #e2b3c4;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+/* Dynamic Live Notification Banner */
+.hug-notification-overlay {
+    position: absolute;
+    top: -100px;
+    width: 85%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 77, 136, 0.2);
+    border-radius: 20px;
+    padding: 18px 15px;
+    box-shadow: 0 15px 35px rgba(255, 77, 136, 0.2);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hug-notification-overlay.slide-down {
+    transform: translateY(125px);
+}
+
+.notification-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ff4d88;
+}
+
+.notification-desc {
+    font-size: 12px;
+    color: #444;
+}
+
+/* Bursting Screen Hearts */
+.burst-heart {
+    position: fixed;
+    pointer-events: none;
+    color: #ff4d88;
+    z-index: 50;
+    animation: burstOut 2s ease-out forwards;
+}
+
+@keyframes burstOut {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(var(--scale)); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="background-hearts" id="ambientContainer"></div>
+
+<div class="hug-notification-overlay" id="hugBanner">
+    <div class="notification-title">💓 Connection Squeezed! 💓</div>
+    <div class="notification-desc">He is holding you tightly across the distance right now!</div>
+    <button class="action-btn" style="padding: 6px 20px; font-size: 11px; width: auto;" onclick="dismissAndReturnHug()">Squeeze Back</button>
+</div>
+
+<div class="connection-card">
+    <div class="status-badge" id="signalStatus">Connecting to Stream...</div>
+    <div class="icon-display" id="mainIcon">🌐</div>
+    <h2>Live Thinking-Of-You Ping</h2>
+    <p>Keep this tab open together. Tap below to send an instant warm virtual squeeze across the distance.</p>
+    <button class="action-btn" id="pingBtn" onclick="transmitLiveHug()">Send a Virtual Hug 💖</button>
+</div>
+
+<script>
+const ambientContainer = document.getElementById('ambientContainer');
+for (let i = 0; i < 15; i++) {
+    const heart = document.createElement('div');
+    heart.classList.add('ambient-heart');
+    heart.innerHTML = '💗';
+    heart.style.left = Math.random() * 100 + '%';
+    heart.style.fontSize = (14 + Math.random() * 14) + 'px';
+    heart.style.animationDuration = (6 + Math.random() * 6) + 's';
+    heart.style.animationDelay = Math.random() * 5 + 's';
+    ambientContainer.appendChild(heart);
+}
+
+const NETWORK_ROOM_ID = "mi_amor_dedicated_ping_channel_2026";
+const signalStatus = document.getElementById('signalStatus');
+const hugBanner = document.getElementById('hugBanner');
+const mainIcon = document.getElementById('mainIcon');
+const pingBtn = document.getElementById('pingBtn');
+
+const phoneFingerprintId = "device_" + Math.floor(Math.random() * 1000000);
+const networkStream = new EventSource(`https://pie.ht/stream/${NETWORK_ROOM_ID}`);
+
+networkStream.onopen = () => {
+    signalStatus.innerHTML = "Connected Live • Signal Clear";
+    signalStatus.style.color = "#2ecc71";
+    mainIcon.innerHTML = "✨💖✨";
+};
+
+networkStream.onerror = () => {
+    signalStatus.innerHTML = "Standby • Connecting...";
+    signalStatus.style.color = "#888";
+    mainIcon.innerHTML = "🌐";
+};
+
+networkStream.onmessage = (messageEvent) => {
+    try {
+        const receivedData = JSON.parse(messageEvent.data);
+        if (receivedData && receivedData.senderId !== phoneFingerprintId && receivedData.type === "LIVE_HUG") {
+            displayIncomingHugEffects();
+        }
+    } catch (parseError) {}
+};
+
+function transmitLiveHug() {
+    pingBtn.disabled = true;
+    pingBtn.innerHTML = "Sending Squeeze...";
+
+    fetch(`https://pie.ht/stream/${NETWORK_ROOM_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ senderId: phoneFingerprintId, type: "LIVE_HUG" })
+    })
+    .then(() => {
+        pingBtn.innerHTML = "Sent Successfully! 🥰";
+        createVisualHeartBurst(window.innerWidth / 2, window.innerHeight / 2);
+        setTimeout(() => {
+            pingBtn.innerHTML = "Send a Virtual Hug 💖";
+            pingBtn.disabled = false;
+        }, 3000);
+    })
+    .catch(() => {
+        pingBtn.innerHTML = "Send a Virtual Hug 💖";
+        pingBtn.disabled = false;
+    });
+}
+
+function displayIncomingHugEffects() {
+    hugBanner.classList.add('slide-down');
+    let cycles = 0;
+    const interval = setInterval(() => {
+        const xCoord = Math.random() * window.innerWidth;
+        const yCoord = Math.random() * window.innerHeight;
+        createVisualHeartBurst(xCoord, yCoord);
+        cycles++;
+        if (cycles > 4) clearInterval(interval);
+    }, 250);
+}
+
+function dismissAndReturnHug() {
+    hugBanner.classList.remove('slide-down');
+    transmitLiveHug();
+}
+
+function createVisualHeartBurst(originX, originY) {
+    for (let i = 0; i < 12; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('burst-heart');
+        particle.innerHTML = Math.random() > 0.5 ? '❤️' : '💗';
+        
+        const targetAngle = Math.random() * Math.PI * 2;
+        const distanceOffset = 60 + Math.random() * 120;
+        
+        const deltaX = Math.cos(targetAngle) * distanceOffset;
+        const deltaY = Math.sin(targetAngle) * distanceOffset;
+        
+        particle.style.left = originX + 'px';
+        particle.style.top = originY + 'px';
+        particle.style.setProperty('--tx', `${deltaX}px`);
+        particle.style.setProperty('--ty', `${deltaY}px`);
+        particle.style.setProperty('--scale', 0.6 + Math.random() * 1);
+        particle.style.fontSize = (16 + Math.random() * 16) + 'px';
+        
+        document.body.appendChild(particle);
+        setTimeout(() => { particle.remove(); }, 2000);
+    }
+}
+</script>
+
+</body>
+</html>
